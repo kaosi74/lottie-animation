@@ -1,58 +1,30 @@
 import { StatusBar } from "expo-status-bar";
-import { Pressable, StyleSheet, Text, View } from "react-native";
-import LottieView from "lottie-react-native";
-import { useEffect, useRef, useState } from "react";
+import {
+  Alert,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Login from "./component/Login";
+import Home from "./component/Home"
 
+const Stack = createNativeStackNavigator();
 export default function App() {
-  const heartRef = useRef(null);
-  const animation2 = useRef(null);
-  const [liked, setLiked] = useState(false);
-  useEffect(() => {}, []);
-
-  const handleClick = () => {
-    if (liked) {
-      heartRef?.current?.reset();
-    } else {
-      heartRef?.current?.play(10, 120);
-    }
-    setLiked(!liked);
-  };
-
-  const openAnime = () => {
-    animation2?.current?.play(0, 50);
-  };
   return (
-    <View style={styles.container}>
-      <View style={styles.welcome}>
-        <LottieView
-          style={{ flex: 1 }}
-          source={require("./assets/animation2.json")}
-          autoPlay
-          loop
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{ headerShown: false }}
         />
-        <Text style={styles.txt}>Welcome back User</Text>
-      </View>
-      <View style={styles.iconRow}>
-        <Pressable style={styles.icon} onPress={handleClick}>
-          <LottieView
-            style={{ flex: 1 }}
-            ref={heartRef}
-            loop={false}
-            source={require("./assets/animation3.json")}
-          />
-        </Pressable>
-        <Pressable style={styles.icon} onPress={openAnime}>
-          <LottieView
-            style={{ flex: 1 }}
-            ref={animation2}
-            loop={false}
-            source={require("./assets/animation.json")}
-          />
-        </Pressable>
-      </View>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+        <Stack.Screen name="Home" component={Home} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
@@ -61,23 +33,39 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    // justifyContent: "center",
+  },
+  heading: {
+    fontSize: 25,
+    // marginVertical: 30,
+  },
+  input: {
+    width: 300,
+    paddingVertical: 20,
+    paddingLeft: 20,
+    borderColor: "blue",
+    borderRadius: 10,
+    borderWidth: 2,
+    alignSelf: "center",
+    marginBottom: 7,
+  },
+  flx: {
+    display: "flex",
+    marginTop: 10,
+    gap: 20,
+  },
+  btn: {
+    backgroundColor: "violet",
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    textAlign: "center",
+    borderRadius: 5,
+    width: 200,
+    alignSelf: "center",
+  },
+  btn2: {
+    backgroundColor: "red",
   },
   txt: {
-    fontSize: 24,
-    fontStyle: 'italic'
-  },
-  welcome: {
-    height: 200,
-    // aspectRatio: 1,
-  },
-  iconRow: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  icon: {
-    height: 200,
-    aspectRatio: 1,
+    textAlign: "center",
   },
 });
